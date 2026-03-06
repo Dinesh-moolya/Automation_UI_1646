@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 import { ControlsPage } from "../helper/ControlsPage.js";
 dotenv.config();
 
-test.describe("UI Test Automation", async () => {
+test.describe("UI Test Automation", () => {
   test.beforeEach(async ({ page }) => {
     const url = process.env.url;
     console.log("page Redirect Url : ", url);
@@ -34,7 +34,6 @@ test.describe("UI Test Automation", async () => {
     await helper.clickAttributeLink();
     await helper.clickAttributeButton();
     console.log("Button with Class Attribute clicked");
-    new UIActionsPage(page);
   });
 
   // click on the "Load delay" link and interact with the button
@@ -44,7 +43,6 @@ test.describe("UI Test Automation", async () => {
     await helper.clickLoadDelayButton();
     await expect(helper.loadDelayButton).toBeVisible();
     console.log("Button Appearing After Delay clicked");
-    new UIActionsPage(page);
   });
 
   // Click on the "Hidden Layers" link and interact with the button
@@ -54,7 +52,6 @@ test.describe("UI Test Automation", async () => {
     await helper.clickHiddenLayersButton();
     await expect(helper.hiddenLayersButton.first()).toBeVisible();
     console.log("Button clicked");
-    new UIActionsPage(page);
   });
 
   // Click on the "AJAX Data" link and interact with the button
@@ -65,7 +62,6 @@ test.describe("UI Test Automation", async () => {
     await helper.clickAjaxDataButton();
     await page.waitForLoadState("networkidle");
     console.log("Data loaded with AJAX get request");
-    new UIActionsPage(page);
   });
 
   // Click on the "Client Side Delay" link and interact with the button
@@ -75,7 +71,6 @@ test.describe("UI Test Automation", async () => {
     await helper.clickClientSideDelayButton();
     await expect(helper.clientSideDelayButton).toBeVisible();
     console.log("Button Triggering Client Side Logic clicked");
-    new UIActionsPage(page);
   });
 
   // Click on the "Click" link and interact with the button
@@ -84,7 +79,6 @@ test.describe("UI Test Automation", async () => {
     await helper.clickClickLink();
     await helper.clickClickButton();
     console.log("Button That Ignores DOM Click clicked");
-    new UIActionsPage(page);
   });
 
   // Click on the "Text Input" link and interact with the textbox and button
@@ -96,7 +90,6 @@ test.describe("UI Test Automation", async () => {
     await helper.clickTextInputButton();
     await expect(helper.textInputButton1).toBeVisible();
     console.log("Button changed its name based on Input Value and clicked");
-    new UIActionsPage(page);
   });
 
   // Click on the "Scrollbars" link and interact with the button
@@ -106,7 +99,6 @@ test.describe("UI Test Automation", async () => {
     await expect(helper.hidingButton).toBeVisible();
     await helper.clickHidingButton();
     console.log("Button clicked");
-    new UIActionsPage(page);
   });
 
   // Click on the "Dynamic Table" Verify cell value in a dynamic table
@@ -117,7 +109,6 @@ test.describe("UI Test Automation", async () => {
     const actualCpu = await helper.getCpuValueForBrowser("Chrome");
     expect(actualCpu).toBe(expectedCpu);
     console.log("Table CPU verified for Chrome value: " + actualCpu);
-    new UIActionsPage(page);
   });
 
   // Click on the "Verify Text" Finding an element by displayed text has nuances
@@ -126,7 +117,6 @@ test.describe("UI Test Automation", async () => {
     await helper.clickVerifyTextLink();
     await expect(helper.welcomeText).toBeVisible();
     console.log("Welcome UserName! verified");
-    new UIActionsPage(page);
   });
 
   //click on the "progress bar" link and interact with the progress bar
@@ -137,7 +127,6 @@ test.describe("UI Test Automation", async () => {
     await helper.stopAtTargetValue(75);
     const finalValue = await helper.getProgressValue();
     console.log("Progress Bar Value:", finalValue + "%");
-    new UIActionsPage(page);
   });
 
   //click on the "visibility" link and interact with the buttons
@@ -149,7 +138,6 @@ test.describe("UI Test Automation", async () => {
     Object.entries(status).forEach(([key, value]) => {
       console.log(`${key} button is ${value ? "visible" : "not visible"}`);
     });
-    new UIActionsPage(page);
   });
 
   // click on the "sample app" link and interact with the form
@@ -161,7 +149,6 @@ test.describe("UI Test Automation", async () => {
     await helper.clickSampleAppLoginButton();
     await expect(helper.welcomeText).toBeVisible();
     console.log(helper.welcomeTextVerified + " is verified");
-    new UIActionsPage(page);
   });
 
   // Click on the "Mouse Over" link and interact with the button
@@ -173,7 +160,6 @@ test.describe("UI Test Automation", async () => {
     await helper.clickClickMe();
     await helper.expectTheLinkAboveClicked2();
     console.log(helper.theLinkAboveClicked2.textContent() + " is verified");
-    new UIActionsPage(page);
   });
 
   // Click on the "Non-Breaking Space" link and interact with the button
@@ -183,7 +169,6 @@ test.describe("UI Test Automation", async () => {
     await helper.clickMyButton();
     await helper.expectMyButtonToBeVisible();
     console.log("My Button clicked");
-    new UIActionsPage(page);
   });
 
   // Click on the "Overlapped Element" link and interact with the button
@@ -193,7 +178,6 @@ test.describe("UI Test Automation", async () => {
     await helper.fillIdTextbox("test");
     await helper.fillNameTextbox("text");
     console.log("Overlapped Element verified");
-    new UIActionsPage(page);
   });
 
   // Click on the "Alerts" link and interact with the alert
@@ -204,7 +188,6 @@ test.describe("UI Test Automation", async () => {
     await helper.handleAlert("dismiss");
     await helper.handleConfirm("dismiss");
     await helper.handlePrompt("Test Input", "accept");
-    new UIActionsPage(page);
   });
 
   // Click File Upload link and interact with the file upload input
@@ -216,7 +199,6 @@ test.describe("UI Test Automation", async () => {
     await helper.clearFileInput();
     await helper.expectFileToBeVisible("testFile.txt");
     console.log("File Upload verified");
-    new UIActionsPage(page);
   });
 
   //Click on the "Animation Button" link and interact with the button
@@ -227,7 +209,6 @@ test.describe("UI Test Automation", async () => {
     await helper.expectMovingTargetButtonToBeVisible();
     await helper.clickMovingTargetButton();
     console.log("Animated Button verified");
-    new UIActionsPage(page);
   });
 
   // Click on the "Disabled Input" link and interact with the button
@@ -239,7 +220,6 @@ test.describe("UI Test Automation", async () => {
     await helper.expectEditFieldToBeDisabled();
     await helper.expectEditFieldToBeEnabled();
     console.log("Disabled Input verified");
-    new UIActionsPage(page);
   });
 
   //Click on the "Auto Wait" link and interact with the button
@@ -247,19 +227,122 @@ test.describe("UI Test Automation", async () => {
     test.setTimeout(60000);
     const helper = new ControlsPage(page);
     await helper.clickAutoWaitLink();
-    for (const delay of [3, 5]) {
+    for (const delay of [3, 5, 10]) {
       await helper.toggleVisibleCheckbox();
       await helper.applyDelay(delay);
       await expect(helper.targetButton).not.toBeVisible();
-      await expect(helper.targetButton).toBeVisible({ timeout: 6000 });
+      await expect(helper.targetButton).toBeVisible({ timeout: 12000 });
     }
     for (const delay of [3, 5, 10]) {
       await helper.toggleEnabledCheckbox();
       await helper.applyDelay(delay);
       await expect(helper.targetButton).toBeDisabled();
       await expect(helper.targetButton).toBeEnabled({ timeout: 12000 });
+      await page.waitForTimeout(5000);
+    }
+    await helper.clickOnElementType("input");
+    for (const delay of [3, 5, 10]) {
+      await helper.toggleVisibleCheckbox();
+      await helper.applyDelay(delay);
+      await expect(helper.targetInput).not.toBeVisible();
+      await expect(helper.targetInput).toBeVisible({ timeout: 12000 });
+      await page.waitForTimeout(5000);
+    }
+    for (const delay of [3, 5, 10]) {
+      await helper.toggleEnabledCheckbox();
+      await helper.applyDelay(delay);
+      await expect(helper.targetInput).toBeDisabled();
+      await expect(helper.targetInput).toBeEnabled({ timeout: 12000 });
+      await page.waitForTimeout(5000);
+    }
+    for (const delay of [3, 5, 10]) {
+      await helper.toggleEditableCheckbox();
+      await helper.applyDelay(delay);
+      await expect(helper.targetInput).not.toBeEditable();
+      await expect(helper.targetInput).toBeEditable({ timeout: 12000 });
+      await page.waitForTimeout(5000);
+    }
+    for (const delay of [3, 5, 10]) {
+      await helper.toggleNonZeroSize();
+      await helper.applyDelay(delay);
+      await expect(helper.targetInput).not.toBeVisible();
+      await expect(helper.targetInput).toBeVisible({ timeout: 12000 });
+      await page.waitForTimeout(5000);
+    }
+    for (const delay of [3, 5, 10]) {
+      await helper.toggleOnTop();
+      await helper.applyDelay(delay);
+      await expect(helper.targetInput).not.toBeVisible();
+      await expect(helper.targetInput).toBeVisible({ timeout: 12000 });
+      await page.waitForTimeout(5000);
+    }
+    for (const elementType of ["textarea", "select", "label", "button"]) {
+      await helper.clickOnElementType(elementType);
+      for (const delay of [3, 5, 10]) {
+        await helper.toggleVisibleCheckbox();
+        await helper.applyDelay(delay);
+        await expect(helper.targetInput).not.toBeVisible();
+        await expect(helper.targetInput).toBeVisible({ timeout: 12000 });
+        await page.waitForTimeout(5000);
+      }
+      for (const delay of [3, 5, 10]) {
+        await helper.toggleEnabledCheckbox();
+        await helper.applyDelay(delay);
+        await expect(helper.targetInput).toBeDisabled();
+        await expect(helper.targetInput).toBeEnabled({ timeout: 12000 });
+        await page.waitForTimeout(5000);
+      }
+      for (const delay of [3, 5, 10]) {
+        await helper.toggleEditableCheckbox();
+        await helper.applyDelay(delay);
+        await expect(helper.targetInput).not.toBeEditable();
+        await expect(helper.targetInput).toBeEditable({ timeout: 12000 });
+        await page.waitForTimeout(5000);
+      }
+      for (const delay of [3, 5, 10]) {
+        await helper.toggleNonZeroSize();
+        await helper.applyDelay(delay);
+        await expect(helper.targetInput).not.toBeVisible();
+        await expect(helper.targetInput).toBeVisible({ timeout: 12000 });
+        await page.waitForTimeout(5000);
+      }
+      for (const delay of [3, 5, 10]) {
+        await helper.toggleOnTop();
+        await helper.applyDelay(delay);
+        await expect(helper.targetInput).not.toBeVisible();
+        await expect(helper.targetInput).toBeVisible({ timeout: 12000 });
+        await page.waitForTimeout(5000);
+      }
     }
     console.log("Auto Wait verified");
-    new UIActionsPage(page);
+  });
+
+  test("Frames", async ({ page }) => {
+    const helper = new ControlsPage(page);
+    await helper.clickFrameLink();
+    const buttons = ["Edit", "Submit", "Click", "Primary"];
+    for (const btn of buttons) {
+      if (btn === "Edit") {
+        await helper.clickIframeEditButton();
+      } else if (btn === "Submit") {
+        await helper.clickSubmitButton1();
+      } else if (btn === "Click") {
+        await helper.clickClickMeButton1();
+      } else if (btn === "Primary") {
+        await helper.clickPrimaryButton1();
+      }
+      await helper.expectButtonPressedText(btn);
+      if (btn === "Edit") {
+        await helper.clickIframeEditButton2();
+      } else if (btn === "Submit") {
+        await helper.clickSubmitButton2();
+      } else if (btn === "Click") {
+        await helper.clickClickMeButton2();
+      } else if (btn === "Primary") {
+        await helper.clickPrimaryButton2();
+      }
+      await helper.expectButtonPressedText2(btn);
+    }
+    console.log("Frames verified");
   });
 });
