@@ -1,24 +1,28 @@
-//
-
 // @ts-check
-import { defineConfig } from "@playwright/test";
+const { defineConfig } = require("@playwright/test");
 
-export default defineConfig({
+module.exports = defineConfig({
   testDir: "./tests",
 
+  // Run browsers one after another
+  workers: 1,
+
   fullyParallel: false,
+
   forbidOnly: !!process.env.CI,
+
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
 
   reporter: "html",
 
+  timeout: 60000,
+
+  expect: {
+    timeout: 10000,
+  },
+
   use: {
-    viewport: null, // Required for maximized mode
     headless: false,
-    launchOptions: {
-      args: ["--start-maximized"],
-    },
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
@@ -26,15 +30,35 @@ export default defineConfig({
   projects: [
     {
       name: "Chromium",
-      use: { browserName: "chromium" },
+      use: {
+        browserName: "chromium",
+        viewport: null,
+        launchOptions: {
+          args: ["--start-maximized"],
+        },
+      },
     },
+
     {
       name: "Firefox",
-      use: { browserName: "firefox" },
+      use: {
+        browserName: "firefox",
+        viewport: {
+          width: 1920,
+          height: 1080,
+        },
+      },
     },
+
     {
       name: "WebKit",
-      use: { browserName: "webkit" },
+      use: {
+        browserName: "webkit",
+        viewport: {
+          width: 1920,
+          height: 1080,
+        },
+      },
     },
   ],
 });

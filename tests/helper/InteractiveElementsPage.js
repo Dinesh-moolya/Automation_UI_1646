@@ -68,13 +68,22 @@ export class InteractiveElementsPage {
   }
 
   async stopAtTargetValue(targetValue) {
-    await this.page.waitForFunction((value) => {
-      const progress = document.querySelector("#progressBar");
-      const current = Number(progress?.getAttribute("aria-valuenow"));
-      return current >= value;
-    }, targetValue);
-
-    await this.stopButton.click();
+    const progressBar = this.page.locator("#progressBar");
+    const stopButton = this.page.locator("#stopButton");
+    await expect(async () => {
+      const currentValue = await progressBar.getAttribute("aria-valuenow");
+      const numericValue = Number(currentValue);
+      if (numericValue >= targetValue) {
+        await stopButton.click();
+        return;
+      }
+      throw new Error(
+        `Current value ${numericValue} is less than ${targetValue}`,
+      );
+    }).toPass({
+      timeout: 30000,
+      intervals: [15],
+    });
   }
 
   async getProgressValue() {
@@ -234,9 +243,7 @@ export class InteractiveElementsPage {
   }
 
   async expectMovingTargetButtonToBeVisible() {
-    await expect(this.movingTargetButton).toBeVisible({
-      timeout: 7000,
-    });
+    await expect(this.movingTargetButton).toBeVisible();
   }
 
   async clickMovingTargetButton() {

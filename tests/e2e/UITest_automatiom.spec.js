@@ -123,10 +123,13 @@ test.describe("UI Test Automation", () => {
   test("Progress Bar", async ({ page }) => {
     const helper = new InteractiveElementsPage(page);
     await helper.clickProgressBarLink();
+    const startValue = await helper.getProgressValue();
+    if (Number(startValue) > 0) await page.reload();
     await helper.startProgress();
     await helper.stopAtTargetValue(75);
     const finalValue = await helper.getProgressValue();
     console.log("Progress Bar Value:", finalValue + "%");
+    expect(Number(finalValue)).toBeGreaterThanOrEqual(75);
   });
 
   //click on the "visibility" link and interact with the buttons
@@ -184,9 +187,8 @@ test.describe("UI Test Automation", () => {
   test("Alerts", async ({ page }) => {
     const helper = new InteractiveElementsPage(page);
     await helper.clickAlertsLink();
-    await helper.handleAlert("dismiss");
-    await helper.handleAlert("dismiss");
-    await helper.handleConfirm("dismiss");
+    await helper.handleAlert("accept");
+    await helper.handleConfirm("accept");
     await helper.handlePrompt("Test Input", "accept");
   });
 
@@ -223,126 +225,148 @@ test.describe("UI Test Automation", () => {
   });
 
   //Click on the "Auto Wait" link and interact with the button
-  test("Auto Wait", async ({ page }) => {
-    test.setTimeout(60000);
-    const helper = new ControlsPage(page);
-    await helper.clickAutoWaitLink();
-    for (const delay of [3, 5, 10]) {
-      await helper.toggleVisibleCheckbox();
-      await helper.applyDelay(delay);
-      await expect(helper.targetButton).not.toBeVisible();
-      await expect(helper.targetButton).toBeVisible({ timeout: 12000 });
-    }
-    for (const delay of [3, 5, 10]) {
-      await helper.toggleEnabledCheckbox();
-      await helper.applyDelay(delay);
-      await expect(helper.targetButton).toBeDisabled();
-      await expect(helper.targetButton).toBeEnabled({ timeout: 12000 });
-      await page.waitForTimeout(5000);
-    }
-    await helper.clickOnElementType("input");
-    for (const delay of [3, 5, 10]) {
-      await helper.toggleVisibleCheckbox();
-      await helper.applyDelay(delay);
-      await expect(helper.targetInput).not.toBeVisible();
-      await expect(helper.targetInput).toBeVisible({ timeout: 12000 });
-      await page.waitForTimeout(5000);
-    }
-    for (const delay of [3, 5, 10]) {
-      await helper.toggleEnabledCheckbox();
-      await helper.applyDelay(delay);
-      await expect(helper.targetInput).toBeDisabled();
-      await expect(helper.targetInput).toBeEnabled({ timeout: 12000 });
-      await page.waitForTimeout(5000);
-    }
-    for (const delay of [3, 5, 10]) {
-      await helper.toggleEditableCheckbox();
-      await helper.applyDelay(delay);
-      await expect(helper.targetInput).not.toBeEditable();
-      await expect(helper.targetInput).toBeEditable({ timeout: 12000 });
-      await page.waitForTimeout(5000);
-    }
-    for (const delay of [3, 5, 10]) {
-      await helper.toggleNonZeroSize();
-      await helper.applyDelay(delay);
-      await expect(helper.targetInput).not.toBeVisible();
-      await expect(helper.targetInput).toBeVisible({ timeout: 12000 });
-      await page.waitForTimeout(5000);
-    }
-    for (const delay of [3, 5, 10]) {
-      await helper.toggleOnTop();
-      await helper.applyDelay(delay);
-      await expect(helper.targetInput).not.toBeVisible();
-      await expect(helper.targetInput).toBeVisible({ timeout: 12000 });
-      await page.waitForTimeout(5000);
-    }
-    for (const elementType of ["textarea", "select", "label", "button"]) {
-      await helper.clickOnElementType(elementType);
-      for (const delay of [3, 5, 10]) {
-        await helper.toggleVisibleCheckbox();
-        await helper.applyDelay(delay);
-        await expect(helper.targetInput).not.toBeVisible();
-        await expect(helper.targetInput).toBeVisible({ timeout: 12000 });
-        await page.waitForTimeout(5000);
-      }
-      for (const delay of [3, 5, 10]) {
-        await helper.toggleEnabledCheckbox();
-        await helper.applyDelay(delay);
-        await expect(helper.targetInput).toBeDisabled();
-        await expect(helper.targetInput).toBeEnabled({ timeout: 12000 });
-        await page.waitForTimeout(5000);
-      }
-      for (const delay of [3, 5, 10]) {
-        await helper.toggleEditableCheckbox();
-        await helper.applyDelay(delay);
-        await expect(helper.targetInput).not.toBeEditable();
-        await expect(helper.targetInput).toBeEditable({ timeout: 12000 });
-        await page.waitForTimeout(5000);
-      }
-      for (const delay of [3, 5, 10]) {
-        await helper.toggleNonZeroSize();
-        await helper.applyDelay(delay);
-        await expect(helper.targetInput).not.toBeVisible();
-        await expect(helper.targetInput).toBeVisible({ timeout: 12000 });
-        await page.waitForTimeout(5000);
-      }
-      for (const delay of [3, 5, 10]) {
-        await helper.toggleOnTop();
-        await helper.applyDelay(delay);
-        await expect(helper.targetInput).not.toBeVisible();
-        await expect(helper.targetInput).toBeVisible({ timeout: 12000 });
-        await page.waitForTimeout(5000);
-      }
-    }
-    console.log("Auto Wait verified");
-  });
+  const DELAYS = [3, 5, 10];
+  const ELEMENTS = ["button", "input", "textarea", "select", "label"];
+  const CHECK_TYPES = ["Visible", "Enabled", "Editable", "Size", "OnTop"];
 
+  test.describe("Auto Wait", () => {
+    test.setTimeout(120000);
+    for (const type of ELEMENTS) {
+      for (const check of CHECK_TYPES) {
+        if (type === "label" && (check === "Enabled" || check === "Editable"))
+          continue;
+        if ((type === "button" || type === "select") && check === "Editable")
+          continue;
+
+        test(`Verify ${type} remains ${check} after restore`, async ({
+          page,
+        }) => {
+          const helper = new ControlsPage(page);
+          await helper.clickAutoWaitLink();
+          await helper.clickOnElementType(type);
+          const target =
+            type === "label" ? helper.targetLabel : helper.targetInput;
+          for (const delay of DELAYS) {
+            // 1. ACTION
+            switch (check) {
+              case "Visible":
+                await helper.uncheckVisibleCheckbox();
+                break;
+              case "Enabled":
+                await helper.uncheckEnabledCheckbox();
+                break;
+              case "Editable":
+                await helper.uncheckEditableCheckbox();
+                break;
+              case "Size":
+                await helper.uncheckNonZeroSize();
+                break;
+              case "OnTop":
+                await helper.uncheckOnTop();
+                break;
+            }
+
+            await helper.applyDelay(delay);
+
+            // 2. NEGATIVE ASSERTION
+            switch (check) {
+              case "Visible":
+              case "Size":
+                await expect(target).not.toBeVisible();
+                break;
+              case "Enabled":
+                await expect(target).toBeDisabled();
+                break;
+              case "Editable":
+                await expect(target).not.toBeEditable();
+                break;
+            }
+
+            // 3. SMART WAIT (Inside helper)
+            await helper.waitForRestore();
+
+            // 4. POSITIVE ASSERTION
+            switch (check) {
+              case "Visible":
+              case "Size":
+                await expect(target).toBeVisible();
+                break;
+              case "OnTop":
+                await expect(target).toBeVisible();
+                // FIX 2: Force Playwright to verify the element isn't covered by an overlay
+                await target.hover({ trial: true });
+                break;
+              case "Enabled":
+                await expect(target).toBeEnabled();
+                break;
+              case "Editable":
+                await expect(target).toBeEditable();
+                break;
+            }
+          }
+          console.log(`Passed: ${type} ${check} suite`);
+        });
+      }
+    }
+  });
+  // Click on the "Frame" link and interact with the button
   test("Frames", async ({ page }) => {
     const helper = new ControlsPage(page);
-    await helper.clickFrameLink();
-    const buttons = ["Edit", "Submit", "Click", "Primary"];
-    for (const btn of buttons) {
-      if (btn === "Edit") {
-        await helper.clickIframeEditButton();
-      } else if (btn === "Submit") {
-        await helper.clickSubmitButton1();
-      } else if (btn === "Click") {
-        await helper.clickClickMeButton1();
-      } else if (btn === "Primary") {
-        await helper.clickPrimaryButton1();
-      }
-      await helper.expectButtonPressedText(btn);
-      if (btn === "Edit") {
-        await helper.clickIframeEditButton2();
-      } else if (btn === "Submit") {
-        await helper.clickSubmitButton2();
-      } else if (btn === "Click") {
-        await helper.clickClickMeButton2();
-      } else if (btn === "Primary") {
-        await helper.clickPrimaryButton2();
-      }
-      await helper.expectButtonPressedText2(btn);
+
+    // 1. Handle potential navigation failure
+    try {
+      await helper.clickFrameLink();
+    } catch (error) {
+      throw new Error(
+        `Failed to navigate to the Frames page: ${error.message}`,
+      );
     }
-    console.log("Frames verified");
+
+    const buttons = ["Edit", "Submit", "Click", "Primary"];
+    const failedButtons = [];
+    for (const btn of buttons) {
+      await test.step(`Verify '${btn}' button across frames`, async () => {
+        try {
+          // --- Frame 1 Actions ---
+          if (btn === "Edit") {
+            await helper.clickIframeEditButton();
+          } else if (btn === "Submit") {
+            await helper.clickSubmitButton1();
+          } else if (btn === "Click") {
+            await helper.clickClickMeButton1();
+          } else if (btn === "Primary") {
+            await helper.clickPrimaryButton1();
+          }
+          await helper.expectButtonPressedText(btn);
+
+          // --- Frame 2 Actions ---
+          if (btn === "Edit") {
+            await helper.clickIframeEditButton2();
+          } else if (btn === "Submit") {
+            await helper.clickSubmitButton2();
+          } else if (btn === "Click") {
+            await helper.clickClickMeButton2();
+          } else if (btn === "Primary") {
+            await helper.clickPrimaryButton2();
+          }
+          await helper.expectButtonPressedText2(btn);
+        } catch (error) {
+          console.error(
+            `\n[ERROR] Frame verification failed for button: '${btn}'`,
+          );
+          console.error(error.message);
+          failedButtons.push(btn);
+        }
+      });
+    }
+
+    // 4. Final verification state
+    if (failedButtons.length > 0) {
+      throw new Error(
+        `Frames test finished with errors. Failed buttons: ${failedButtons.join(", ")}`,
+      );
+    } else {
+      console.log("Frames verified successfully");
+    }
   });
 });

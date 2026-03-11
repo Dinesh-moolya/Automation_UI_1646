@@ -75,14 +75,6 @@ export class UIActionsPage {
     await this.loadDelayButton.click();
   }
 
-  async loadDelayLink() {
-    await this.loadDelayLink.click();
-  }
-
-  async loadDelayButton() {
-    await this.loadDelayButton.click();
-  }
-
   async clickHiddenLayersLink() {
     await this.hiddenLayersLink.click();
   }
@@ -138,23 +130,21 @@ export class UIActionsPage {
   async clickDynamicTableLink() {
     await this.dynamicTableLink.click();
   }
-
   async getExpectedCpuFromWarning() {
     const text = await this.warningText.textContent();
     if (!text) throw new Error("Warning text not found");
-
-    return text.split(": ")[1].trim();
+    const match = text.match(/:\s*(.+?)$/);
+    const value = match ? match[1].trim() : null;
+    return value;
   }
 
   async getCpuValueForBrowser(browserName) {
     const rowCount = await this.rows.count();
     const headers = await this.rows.nth(0).locator("span").allInnerTexts();
     const cpuIndex = headers.findIndex((h) => h.trim() === "CPU");
-
     if (cpuIndex === -1) {
       throw new Error("CPU column not found");
     }
-
     for (let i = 1; i < rowCount; i++) {
       const cells = await this.rows.nth(i).locator("span").allInnerTexts();
 
@@ -162,7 +152,6 @@ export class UIActionsPage {
         return cells[cpuIndex].trim();
       }
     }
-
     throw new Error(`${browserName} row not found`);
   }
 

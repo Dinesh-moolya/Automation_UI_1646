@@ -26,64 +26,40 @@ export class ControlsPage {
 
     this.targetButton = page.getByRole("button", { name: "Button" });
     this.targetInput = page.locator("#target");
+    this.targetLabel = page.getByText("This is a Label");
     this.frameLink = page.getByRole("link", { name: "Frame" });
-    this.iframeEdit1 = page
-      .locator('iframe[name="frame-outer"]')
-      .contentFrame()
-      .getByRole("button", { name: "Edit" });
-    this.submitButton1 = page
-      .locator('iframe[name="frame-outer"]')
-      .contentFrame()
-      .getByRole("button", { name: "Submit" });
-    this.clickMeButton1 = page
-      .locator('iframe[name="frame-outer"]')
-      .contentFrame()
-      .getByRole("button", { name: "Click me" });
-    this.primaryButton1 = page
-      .locator('iframe[name="frame-outer"]')
-      .contentFrame()
-      .getByRole("button", { name: "Primary" });
-    this.iframeEdit2 = page
-      .locator('iframe[name="frame-outer"]')
-      .contentFrame()
+    this.outerFrame = page.locator('iframe[name="frame-outer"]').contentFrame();
+    this.innerFrame = this.outerFrame
       .locator('iframe[name="frame-inner"]')
-      .contentFrame()
-      .getByRole("button", { name: "Edit" });
-    this.submitButton2 = page
-      .locator('iframe[name="frame-outer"]')
-      .contentFrame()
-      .locator('iframe[name="frame-inner"]')
-      .contentFrame()
-      .getByRole("button", { name: "Submit" });
-    this.clickMeButton2 = page
-      .locator('iframe[name="frame-outer"]')
-      .contentFrame()
-      .locator('iframe[name="frame-inner"]')
-      .contentFrame()
-      .getByRole("button", { name: "Click me" });
-    this.primaryButton2 = page
-      .locator('iframe[name="frame-outer"]')
-      .contentFrame()
-      .locator('iframe[name="frame-inner"]')
-      .contentFrame()
-      .getByRole("button", { name: "Primary" });
-    this.iframeEdit3 = page
-      .locator('iframe[name="frame-outer"]')
-      .contentFrame()
-      .getByRole("button", { name: "Edit" });
+      .contentFrame();
+    // Frame 1 Buttons
+    this.iframeEdit1 = this.outerFrame.getByRole("button", { name: "Edit" });
+    this.submitButton1 = this.outerFrame.getByRole("button", {
+      name: "Submit",
+    });
+    this.clickMeButton1 = this.outerFrame.getByRole("button", {
+      name: "Click me",
+    });
+    this.primaryButton1 = this.outerFrame.getByRole("button", {
+      name: "Primary",
+    });
+    // Frame 2 Buttons
+    this.iframeEdit2 = this.innerFrame.getByRole("button", { name: "Edit" });
+    this.submitButton2 = this.innerFrame.getByRole("button", {
+      name: "Submit",
+    });
+    this.clickMeButton2 = this.innerFrame.getByRole("button", {
+      name: "Click me",
+    });
+    this.primaryButton2 = this.innerFrame.getByRole("button", {
+      name: "Primary",
+    });
+    // Dynamic Text Locators
     this.buttonPressedText = (button) =>
-      page
-        .locator('iframe[name="frame-outer"]')
-        .contentFrame()
-        .getByText(`Button pressed: ${button}`);
+      this.outerFrame.getByText(`Button pressed: ${button}`);
 
     this.buttonPressedText2 = (button) =>
-      page
-        .locator('iframe[name="frame-outer"]')
-        .contentFrame()
-        .locator('iframe[name="frame-inner"]')
-        .contentFrame()
-        .getByText(`Button pressed: ${button}`);
+      this.innerFrame.getByText(`Button pressed: ${button}`);
   }
   async clickDisabledInputLink() {
     await this.disabledInputLink.click();
@@ -108,45 +84,38 @@ export class ControlsPage {
     await this.elementType(button);
   }
 
-  async toggleVisibleCheckbox() {
+  async uncheckVisibleCheckbox() {
     await this.visibleCheckbox.uncheck();
   }
-  async restoreVisibleCheckbox() {
-    await this.visibleCheckbox.check();
-  }
 
-  async toggleEnabledCheckbox() {
+  async uncheckEnabledCheckbox() {
     await this.enabledCheckbox.uncheck();
   }
-  async restoreEnabledCheckbox() {
-    await this.enabledCheckbox.check();
-  }
 
-  async toggleEditableCheckbox() {
+  async uncheckEditableCheckbox() {
     await this.editableCheckbox.uncheck();
   }
-  async restoreEditableCheckbox() {
-    await this.editableCheckbox.check();
-  }
 
-  async toggleNonZeroSize() {
+  async uncheckNonZeroSize() {
     await this.nonZeroSize.uncheck();
   }
-  async restoreNonZeroSize() {
-    await this.nonZeroSize.check();
-  }
 
-  async toggleOnTop() {
+  async uncheckOnTop() {
     await this.onTop.uncheck();
-  }
-  async restoreOnTop() {
-    await this.onTop.check();
   }
 
   async applyDelay(seconds) {
-    if (seconds === 3) await this.apply3sButton.click();
-    if (seconds === 5) await this.apply5sButton.click();
-    if (seconds === 10) await this.apply10sButton.click();
+    switch (seconds) {
+      case 3:
+        await this.apply3sButton.click();
+        break;
+      case 5:
+        await this.apply5sButton.click();
+        break;
+      case 10:
+        await this.apply10sButton.click();
+        break;
+    }
   }
 
   async clickFrameLink() {
@@ -182,5 +151,15 @@ export class ControlsPage {
   }
   async expectButtonPressedText2(button) {
     await expect(this.buttonPressedText2(button)).toBeVisible();
+  }
+  async waitForRestore() {
+    const status = this.page.locator("#opstatus");
+    await expect(async () => {
+      const text = await (await status.textContent())?.trim();
+      expect(text).toMatch(/state restored/i);
+    }).toPass({
+      timeout: 15000,
+      intervals: [1000],
+    });
   }
 }
