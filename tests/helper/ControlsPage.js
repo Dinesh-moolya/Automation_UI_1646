@@ -61,7 +61,7 @@ export class ControlsPage {
     this.buttonPressedText2 = (button) =>
       this.innerFrame.getByText(`Button pressed: ${button}`);
   }
-  async clickDisabledInputLink() {
+  async disabledInputLink() {
     await this.disabledInputLink.click();
   }
   async fillEditField(value) {
