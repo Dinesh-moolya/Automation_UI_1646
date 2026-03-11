@@ -23,24 +23,24 @@ test.describe("UI Test Automation", () => {
   // Click on the "Dynamic ID" link and interact with the button
   test("Dynamic ID", async ({ page }) => {
     const helper = new UIActionsPage(page);
-    await helper.clickDynamicLink();
-    await helper.clickDynamicButton();
+    await helper.dynamicLink();
+    await helper.dynamicButton();
     console.log("Button with Dynamic ID clicked");
   });
 
   // Click on the "Class Attribute" link and interact with the button
   test("Class Attribute", async ({ page }) => {
     const helper = new UIActionsPage(page);
-    await helper.clickAttributeLink();
-    await helper.clickAttributeButton();
+    await helper.attributeLink();
+    await helper.attributeButton();
     console.log("Button with Class Attribute clicked");
   });
 
   // click on the "Load delay" link and interact with the button
   test("Load Delay", async ({ page }) => {
     const helper = new UIActionsPage(page);
-    await helper.clickLoadDelayLink();
-    await helper.clickLoadDelayButton();
+    await helper.loadDelayLink();
+    await helper.loadDelayButton();
     await expect(helper.loadDelayButton).toBeVisible();
     console.log("Button Appearing After Delay clicked");
   });
@@ -48,8 +48,8 @@ test.describe("UI Test Automation", () => {
   // Click on the "Hidden Layers" link and interact with the button
   test("Hidden Layers", async ({ page }) => {
     const helper = new UIActionsPage(page);
-    await helper.clickHiddenLayersLink();
-    await helper.clickHiddenLayersButton();
+    await helper.hiddenLayersLink();
+    await helper.hiddenLayersButton();
     await expect(helper.hiddenLayersButton.first()).toBeVisible();
     console.log("Button clicked");
   });
@@ -58,8 +58,8 @@ test.describe("UI Test Automation", () => {
   test("AJAX Data", async ({ page }) => {
     test.setTimeout(60000);
     const helper = new UIActionsPage(page);
-    await helper.clickAjaxDataLink();
-    await helper.clickAjaxDataButton();
+    await helper.ajaxDataLink();
+    await helper.ajaxDataButton();
     await page.waitForLoadState("networkidle");
     console.log("Data loaded with AJAX get request");
   });
@@ -67,8 +67,8 @@ test.describe("UI Test Automation", () => {
   // Click on the "Client Side Delay" link and interact with the button
   test("Client Side Delay", async ({ page }) => {
     const helper = new UIActionsPage(page);
-    await helper.clickClientSideDelayLink();
-    await helper.clickClientSideDelayButton();
+    await helper.clientSideDelayLink();
+    await helper.clientSideDelayButton();
     await expect(helper.clientSideDelayButton).toBeVisible();
     console.log("Button Triggering Client Side Logic clicked");
   });
@@ -76,8 +76,8 @@ test.describe("UI Test Automation", () => {
   // Click on the "Click" link and interact with the button
   test("Click", async ({ page }) => {
     const helper = new UIActionsPage(page);
-    await helper.clickClickLink();
-    await helper.clickClickButton();
+    await helper.clickLink();
+    await helper.clickButton();
     console.log("Button That Ignores DOM Click clicked");
   });
 
@@ -85,9 +85,9 @@ test.describe("UI Test Automation", () => {
   test("Text Input", async ({ page }) => {
     test.setTimeout(60000);
     const helper = new UIActionsPage(page);
-    await helper.clickTextInputLink();
+    await helper.textInputLink();
     await helper.textInputTextbox.fill("Test");
-    await helper.clickTextInputButton();
+    await helper.textInputButton();
     await expect(helper.textInputButton1).toBeVisible();
     console.log("Button changed its name based on Input Value and clicked");
   });
@@ -97,14 +97,14 @@ test.describe("UI Test Automation", () => {
     const helper = new UIActionsPage(page);
     await helper.scrollbarsLinks();
     await expect(helper.hidingButton).toBeVisible();
-    await helper.clickHidingButton();
+    await helper.hidingButton();
     console.log("Button clicked");
   });
 
   // Click on the "Dynamic Table" Verify cell value in a dynamic table
   test("Dynamic Table", async ({ page }) => {
     const helper = new UIActionsPage(page);
-    await helper.clickDynamicTableLink();
+    await helper.dynamicTableLink();
     const expectedCpu = await helper.getExpectedCpuFromWarning();
     const actualCpu = await helper.getCpuValueForBrowser("Chrome");
     expect(actualCpu).toBe(expectedCpu);
@@ -114,7 +114,7 @@ test.describe("UI Test Automation", () => {
   // Click on the "Verify Text" Finding an element by displayed text has nuances
   test("Verify Text", async ({ page }) => {
     const helper = new UIActionsPage(page);
-    await helper.clickVerifyTextLink();
+    await helper.verifyTextLink();
     await expect(helper.welcomeText).toBeVisible();
     console.log("Welcome UserName! verified");
   });
@@ -122,7 +122,7 @@ test.describe("UI Test Automation", () => {
   //click on the "progress bar" link and interact with the progress bar
   test("Progress Bar", async ({ page }) => {
     const helper = new InteractiveElementsPage(page);
-    await helper.clickProgressBarLink();
+    await helper.progressBarLink();
     const startValue = await helper.getProgressValue();
     if (Number(startValue) > 0) await page.reload();
     await helper.startProgress();
@@ -135,8 +135,8 @@ test.describe("UI Test Automation", () => {
   //click on the "visibility" link and interact with the buttons
   test("Visibility", async ({ page }) => {
     const helper = new InteractiveElementsPage(page);
-    await helper.clickVisibilityLink();
-    await helper.clickHide();
+    await helper.visibilityLink();
+    await helper.hide();
     const status = await helper.getVisibilityStatus();
     Object.entries(status).forEach(([key, value]) => {
       console.log(`${key} button is ${value ? "visible" : "not visible"}`);
@@ -146,10 +146,10 @@ test.describe("UI Test Automation", () => {
   // click on the "sample app" link and interact with the form
   test("Sample App", async ({ page }) => {
     const helper = new InteractiveElementsPage(page);
-    await helper.clickSampleApp();
+    await helper.sampleApp();
     await helper.fillSampleAppUserName("testuser");
     await helper.fillSampleAppPassword("pwd");
-    await helper.clickSampleAppLoginButton();
+    await helper.sampleAppLoginButton();
     await expect(helper.welcomeText).toBeVisible();
     console.log(helper.welcomeTextVerified + " is verified");
   });
@@ -157,10 +157,10 @@ test.describe("UI Test Automation", () => {
   // Click on the "Mouse Over" link and interact with the button
   test("Mouse Over", async ({ page }) => {
     const helper = new InteractiveElementsPage(page);
-    await helper.clickMouseOver();
-    await helper.clickClickMe();
+    await helper.mouseOver();
+    await helper.clickMe();
     await helper.expectTheLinkAboveClicked1();
-    await helper.clickClickMe();
+    await helper.clickMe();
     await helper.expectTheLinkAboveClicked2();
     console.log(helper.theLinkAboveClicked2.textContent() + " is verified");
   });
@@ -168,8 +168,8 @@ test.describe("UI Test Automation", () => {
   // Click on the "Non-Breaking Space" link and interact with the button
   test("Non-Breaking Space", async ({ page }) => {
     const helper = new InteractiveElementsPage(page);
-    await helper.clickNonBreakingSpaceLink();
-    await helper.clickMyButton();
+    await helper.nonBreakingSpaceLink();
+    await helper.myButton();
     await helper.expectMyButtonToBeVisible();
     console.log("My Button clicked");
   });
@@ -177,7 +177,7 @@ test.describe("UI Test Automation", () => {
   // Click on the "Overlapped Element" link and interact with the button
   test("Overlapped Element", async ({ page }) => {
     const helper = new InteractiveElementsPage(page);
-    await helper.clickOverlappedElementLink();
+    await helper.overlappedElementLink();
     await helper.fillIdTextbox("test");
     await helper.fillNameTextbox("text");
     console.log("Overlapped Element verified");
@@ -186,7 +186,7 @@ test.describe("UI Test Automation", () => {
   // Click on the "Alerts" link and interact with the alert
   test("Alerts", async ({ page }) => {
     const helper = new InteractiveElementsPage(page);
-    await helper.clickAlertsLink();
+    await helper.alertsLink();
     await helper.handleAlert("accept");
     await helper.handleConfirm("accept");
     await helper.handlePrompt("Test Input", "accept");
@@ -195,7 +195,7 @@ test.describe("UI Test Automation", () => {
   // Click File Upload link and interact with the file upload input
   test("File Upload", async ({ page }) => {
     const helper = new InteractiveElementsPage(page);
-    await helper.clickFileUploadLink();
+    await helper.fileUploadLink();
     await helper.uploadFile(path.resolve("TestData/testFile.txt"));
     await helper.expectFileToBeVisible("testFile.txt");
     await helper.clearFileInput();
@@ -206,17 +206,17 @@ test.describe("UI Test Automation", () => {
   //Click on the "Animation Button" link and interact with the button
   test("Animated Button", async ({ page }) => {
     const helper = new InteractiveElementsPage(page);
-    await helper.clickAnimatedButtonLink();
-    await helper.clickStartAnimationButton();
+    await helper.animatedButtonLink();
+    await helper.startAnimationButton();
     await helper.expectMovingTargetButtonToBeVisible();
-    await helper.clickMovingTargetButton();
+    await helper.movingTargetButton();
     console.log("Animated Button verified");
   });
 
   // Click on the "Disabled Input" link and interact with the button
   test("Disabled Input", async ({ page }) => {
     const helper = new ControlsPage(page);
-    await helper.clickDisabledInputLink();
+    await helper.disabledInputLink();
     await helper.fillEditField("test");
     await helper.clickEnableButton();
     await helper.expectEditFieldToBeDisabled();

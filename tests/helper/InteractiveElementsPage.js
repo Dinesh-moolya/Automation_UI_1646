@@ -112,7 +112,7 @@ export class InteractiveElementsPage {
     };
   }
 
-  async clickSampleApp() {
+  async sampleApp() {
     await this.sampleAppLink.click();
   }
 
@@ -124,19 +124,19 @@ export class InteractiveElementsPage {
     await this.sampleAppPassword.fill(value);
   }
 
-  async clickSampleAppLoginButton() {
+  async sampleAppLoginButton() {
     await this.sampleAppLoginButton.click();
   }
 
-  async clickMouseOver() {
+  async mouseOver() {
     await this.mouseOver.click();
   }
 
-  async clickClickMe() {
+  async clickMe() {
     await this.clickMe.click();
   }
 
-  async clickLinkButton() {
+  async linkButton() {
     await this.linkButton.click();
   }
 
@@ -148,11 +148,11 @@ export class InteractiveElementsPage {
     await expect(this.theLinkAboveClicked2).toBeVisible();
   }
 
-  async clickNonBreakingSpaceLink() {
+  async nonBreakingSpaceLink() {
     await this.nonBreakingSpaceLink.click();
   }
 
-  async clickMyButton() {
+  async myButton() {
     await this.myButton.click();
   }
 
@@ -160,7 +160,7 @@ export class InteractiveElementsPage {
     await expect(this.myButton).toBeVisible();
   }
 
-  async clickOverlappedElementLink() {
+  async overlappedElementLink() {
     await this.overlappedElementLink.click();
   }
 
@@ -172,7 +172,7 @@ export class InteractiveElementsPage {
     await this.nameTextbox.fill(value);
   }
 
-  async clickAlertsLink() {
+  async alertsLink() {
     await this.alertsLink.click();
   }
 
@@ -218,7 +218,7 @@ export class InteractiveElementsPage {
     await this.promptButton.click();
   }
 
-  async clickFileUploadLink() {
+  async fileUploadLink() {
     await this.fileUploadLink.click();
   }
 
@@ -234,11 +234,11 @@ export class InteractiveElementsPage {
     await this.fileInput.setInputFiles([]);
   }
 
-  async clickAnimatedButtonLink() {
+  async animatedButtonLink() {
     await this.animatedButtonLink.click();
   }
 
-  async clickStartAnimationButton() {
+  async startAnimationButton() {
     await this.startAnimationButton.click();
   }
 
@@ -246,7 +246,7 @@ export class InteractiveElementsPage {
     await expect(this.movingTargetButton).toBeVisible();
   }
 
-  async clickMovingTargetButton() {
+  async movingTargetButton() {
     await this.movingTargetButton.click();
   }
 }

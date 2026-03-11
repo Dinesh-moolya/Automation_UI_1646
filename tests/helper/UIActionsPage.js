@@ -8,9 +8,9 @@ export class UIActionsPage {
     this.attributeLink = this.page.getByRole("link", {
       name: "Class Attribute",
     });
-    this.attributeButton = this.page.locator(
-      "//button[contains(concat(' ', normalize-space(@class), ' '), ' btn-primary ')]",
-    );
+    this.attributeButton = this.page
+      .getByRole("button", { name: "Button" })
+      .first();
     this.loadDelayLink = this.page.getByRole("link", { name: "Load Delay" });
     this.loadDelayButton = this.page.getByRole("button", {
       name: "Button Appearing After Delay",
@@ -51,60 +51,60 @@ export class UIActionsPage {
     );
   }
 
-  async clickDynamicLink() {
+  async dynamicLink() {
     await this.dynamicLink.click();
   }
 
-  async clickDynamicButton() {
+  async dynamicButton() {
     await this.dynamicButton.click();
   }
 
-  async clickAttributeLink() {
+  async attributeLink() {
     await this.attributeLink.click();
   }
 
-  async clickAttributeButton() {
+  async attributeButton() {
     await this.attributeButton.click();
   }
 
-  async clickLoadDelayLink() {
+  async loadDelayLink() {
     await this.loadDelayLink.click();
   }
 
-  async clickLoadDelayButton() {
+  async loadDelayButton() {
     await this.loadDelayButton.click();
   }
 
-  async clickHiddenLayersLink() {
+  async hiddenLayersLink() {
     await this.hiddenLayersLink.click();
   }
 
-  async clickHiddenLayersButton() {
+  async hiddenLayersButton() {
     await this.hiddenLayersButton.click();
   }
-  async clickAjaxDataLink() {
+  async ajaxDataLink() {
     await this.ajaxDataLink.click();
   }
 
-  async clickAjaxDataButton() {
+  async ajaxDataButton() {
     await this.ajaxDataButton.click();
   }
-  async clickClientSideDelayLink() {
+  async clientSideDelayLink() {
     await this.clientSideDelayLink.click();
   }
 
-  async clickClientSideDelayButton() {
+  async clientSideDelayButton() {
     await this.clientSideDelayButton.click();
   }
 
-  async clickClickLink() {
+  async clickLink() {
     await this.clickLink.click();
   }
 
-  async clickClickButton() {
+  async clickButton() {
     await this.clickButton.click();
   }
-  async clickTextInputLink() {
+  async textInputLink() {
     await this.textInputLink.click();
   }
 
@@ -112,7 +112,7 @@ export class UIActionsPage {
     await this.textInputTextbox.fill(value);
   }
 
-  async clickTextInputButton() {
+  async textInputButton() {
     await this.textInputButton.click();
   }
   async scrollbarsLinks() {
@@ -123,11 +123,11 @@ export class UIActionsPage {
     await this.hidingButton.scrollIntoViewIfNeeded();
   }
 
-  async clickHidingButton() {
+  async hidingButton() {
     await this.hidingButton.click();
   }
 
-  async clickDynamicTableLink() {
+  async dynamicTableLink() {
     await this.dynamicTableLink.click();
   }
   async getExpectedCpuFromWarning() {
