@@ -2,7 +2,9 @@ name: Playwright Tests
 
 on:
   push:
+    branches: [UI_test_automation_playwright]
   pull_request:
+    branches: [UI_test_automation_playwright]
 
 jobs:
   playwright-test:
@@ -15,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: 18
 
       - name: Install Dependencies
         run: npm ci
