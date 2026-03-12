@@ -122,28 +122,28 @@ export class ControlsPage {
     await this.frameLink.click();
   }
 
-  async iframeEditButton() {
+  async iframeEditButtons() {
     await this.iframeEdit1.click();
   }
-  async submitButton1() {
+  async submitButtons1() {
     await this.submitButton1.click();
   }
-  async clickMeButton1() {
+  async clickMeButtons1() {
     await this.clickMeButton1.click();
   }
-  async primaryButton1() {
+  async primaryButtons1() {
     await this.primaryButton1.click();
   }
-  async iframeEditButton2() {
+  async iframeEditButtons2() {
     await this.iframeEdit2.click();
   }
-  async submitButton2() {
+  async submitButtons2() {
     await this.submitButton2.click();
   }
-  async clickMeButton2() {
+  async clickMeButtons2() {
     await this.clickMeButton2.click();
   }
-  async primaryButton2() {
+  async primaryButtons2() {
     await this.primaryButton2.click();
   }
   async expectButtonPressedText(button) {
