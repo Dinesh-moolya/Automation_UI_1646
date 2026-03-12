@@ -1,6 +1,6 @@
 name: Playwright Docker Tests
 
-on: [push, pull_request]
+on: push
 
 jobs:
   test:
