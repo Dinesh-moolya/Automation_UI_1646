@@ -51,60 +51,60 @@ export class UIActionsPage {
     );
   }
 
-  async dynamicLink() {
+  async dynamicLinks() {
     await this.dynamicLink.click();
   }
 
-  async dynamicButton() {
+  async dynamicButtons() {
     await this.dynamicButton.click();
   }
 
-  async attributeLink() {
+  async attributeLinks() {
     await this.attributeLink.click();
   }
 
-  async attributeButton() {
+  async attributeButtons() {
     await this.attributeButton.click();
   }
 
-  async loadDelayLink() {
+  async loadDelayLinks() {
     await this.loadDelayLink.click();
   }
 
-  async loadDelayButton() {
+  async loadDelayButtons() {
     await this.loadDelayButton.click();
   }
 
-  async hiddenLayersLink() {
+  async hiddenLayersLinks() {
     await this.hiddenLayersLink.click();
   }
 
-  async hiddenLayersButton() {
+  async hiddenLayersButtons() {
     await this.hiddenLayersButton.click();
   }
-  async ajaxDataLink() {
+  async ajaxDataLinks() {
     await this.ajaxDataLink.click();
   }
 
-  async ajaxDataButton() {
+  async ajaxDataButtons() {
     await this.ajaxDataButton.click();
   }
-  async clientSideDelayLink() {
+  async clientSideDelayLinks() {
     await this.clientSideDelayLink.click();
   }
 
-  async clientSideDelayButton() {
+  async clientSideDelayButtons() {
     await this.clientSideDelayButton.click();
   }
 
-  async clickLink() {
+  async clickLinks() {
     await this.clickLink.click();
   }
 
-  async clickButton() {
+  async clickButtons() {
     await this.clickButton.click();
   }
-  async textInputLink() {
+  async textInputLinks() {
     await this.textInputLink.click();
   }
 
@@ -112,7 +112,7 @@ export class UIActionsPage {
     await this.textInputTextbox.fill(value);
   }
 
-  async textInputButton() {
+  async textInputButtons() {
     await this.textInputButton.click();
   }
   async scrollbarsLinks() {
@@ -123,11 +123,11 @@ export class UIActionsPage {
     await this.hidingButton.scrollIntoViewIfNeeded();
   }
 
-  async hidingButton() {
+  async hidingButtons() {
     await this.hidingButton.click();
   }
 
-  async dynamicTableLink() {
+  async dynamicTableLinks() {
     await this.dynamicTableLink.click();
   }
   async getExpectedCpuFromWarning() {
@@ -155,7 +155,7 @@ export class UIActionsPage {
     throw new Error(`${browserName} row not found`);
   }
 
-  async clickVerifyTextLink() {
+  async verifyTextLinks() {
     await this.verifyTextLink.click();
   }
 }

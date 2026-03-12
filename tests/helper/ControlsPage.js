@@ -61,7 +61,7 @@ export class ControlsPage {
     this.buttonPressedText2 = (button) =>
       this.innerFrame.getByText(`Button pressed: ${button}`);
   }
-  async disabledInputLink() {
+  async disabledInputLinks() {
     await this.disabledInputLink.click();
   }
   async fillEditField(value) {
@@ -76,11 +76,11 @@ export class ControlsPage {
   async expectEditFieldToBeEnabled() {
     await expect(this.editField).toBeEnabled({ timeout: 6000 });
   }
-  async clickAutoWaitLink() {
+  async autoWaitLinks() {
     await this.autoWaitLink.click();
   }
 
-  async clickOnElementType(button) {
+  async onElementType(button) {
     await this.elementType(button);
   }
 
@@ -118,32 +118,32 @@ export class ControlsPage {
     }
   }
 
-  async clickFrameLink() {
+  async frameLinks() {
     await this.frameLink.click();
   }
 
-  async clickIframeEditButton() {
+  async iframeEditButton() {
     await this.iframeEdit1.click();
   }
-  async clickSubmitButton1() {
+  async submitButton1() {
     await this.submitButton1.click();
   }
-  async clickClickMeButton1() {
+  async clickMeButton1() {
     await this.clickMeButton1.click();
   }
-  async clickPrimaryButton1() {
+  async primaryButton1() {
     await this.primaryButton1.click();
   }
-  async clickIframeEditButton2() {
+  async iframeEditButton2() {
     await this.iframeEdit2.click();
   }
-  async clickSubmitButton2() {
+  async submitButton2() {
     await this.submitButton2.click();
   }
-  async clickClickMeButton2() {
+  async clickMeButton2() {
     await this.clickMeButton2.click();
   }
-  async clickPrimaryButton2() {
+  async primaryButton2() {
     await this.primaryButton2.click();
   }
   async expectButtonPressedText(button) {

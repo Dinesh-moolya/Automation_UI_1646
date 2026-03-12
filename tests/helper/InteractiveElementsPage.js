@@ -59,7 +59,7 @@ export class InteractiveElementsPage {
     });
   }
 
-  async clickProgressBarLink() {
+  async progressBarLinks() {
     await this.progressBarLink.click();
   }
 
@@ -92,7 +92,7 @@ export class InteractiveElementsPage {
     return value;
   }
 
-  async clickVisibilityLink() {
+  async VisibilityLinks() {
     await this.visibilityLink.click();
   }
 
@@ -124,15 +124,15 @@ export class InteractiveElementsPage {
     await this.sampleAppPassword.fill(value);
   }
 
-  async sampleAppLoginButton() {
+  async sampleAppLoginButtons() {
     await this.sampleAppLoginButton.click();
   }
 
-  async mouseOver() {
+  async mouseOvers() {
     await this.mouseOver.click();
   }
 
-  async clickMe() {
+  async clickMes() {
     await this.clickMe.click();
   }
 
@@ -148,11 +148,11 @@ export class InteractiveElementsPage {
     await expect(this.theLinkAboveClicked2).toBeVisible();
   }
 
-  async nonBreakingSpaceLink() {
+  async nonBreakingSpaceLinks() {
     await this.nonBreakingSpaceLink.click();
   }
 
-  async myButton() {
+  async myButtons() {
     await this.myButton.click();
   }
 
@@ -160,7 +160,7 @@ export class InteractiveElementsPage {
     await expect(this.myButton).toBeVisible();
   }
 
-  async overlappedElementLink() {
+  async overlappedElementLinks() {
     await this.overlappedElementLink.click();
   }
 
@@ -172,7 +172,7 @@ export class InteractiveElementsPage {
     await this.nameTextbox.fill(value);
   }
 
-  async alertsLink() {
+  async alertsLinks() {
     await this.alertsLink.click();
   }
 
@@ -218,7 +218,7 @@ export class InteractiveElementsPage {
     await this.promptButton.click();
   }
 
-  async fileUploadLink() {
+  async fileUploadLinks() {
     await this.fileUploadLink.click();
   }
 
@@ -234,11 +234,11 @@ export class InteractiveElementsPage {
     await this.fileInput.setInputFiles([]);
   }
 
-  async animatedButtonLink() {
+  async animatedButtonLinks() {
     await this.animatedButtonLink.click();
   }
 
-  async startAnimationButton() {
+  async startAnimationButtons() {
     await this.startAnimationButton.click();
   }
 
@@ -246,7 +246,7 @@ export class InteractiveElementsPage {
     await expect(this.movingTargetButton).toBeVisible();
   }
 
-  async movingTargetButton() {
+  async movingTargetButtons() {
     await this.movingTargetButton.click();
   }
 }
