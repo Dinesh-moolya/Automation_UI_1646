@@ -8,7 +8,8 @@ dotenv.config();
 
 test.describe("UI Test Automation", () => {
   test.beforeEach(async ({ page }) => {
-    const url = process.env.url;
+    // const url = process.env.url;
+    const url = "http://uitestingplayground.com/";
     console.log("page Redirect Url : ", url);
     await page.goto(url);
   });
