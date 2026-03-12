@@ -176,7 +176,7 @@ export class InteractiveElementsPage {
     await this.alertsLink.click();
   }
 
-  async handleAlert(action = "dismiss") {
+  async handleAlert(action) {
     this.page.once("dialog", async (dialog) => {
       console.log(`Dialog message: ${dialog.message()}`);
 
