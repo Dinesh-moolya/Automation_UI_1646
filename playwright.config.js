@@ -4,9 +4,7 @@ const { defineConfig } = require("@playwright/test");
 module.exports = defineConfig({
   testDir: "./tests",
 
-  // Run browsers one after another
   workers: 1,
-
   fullyParallel: false,
 
   forbidOnly: !!process.env.CI,
@@ -22,8 +20,11 @@ module.exports = defineConfig({
   },
 
   use: {
-    headless: false,
+    // Run headless in Docker
+    headless: true,
+
     trace: "on-first-retry",
+
     screenshot: "only-on-failure",
   },
 
@@ -33,31 +34,20 @@ module.exports = defineConfig({
       use: {
         browserName: "chromium",
         viewport: null,
-        launchOptions: {
-          args: ["--start-maximized"],
-        },
       },
     },
-
     {
       name: "Firefox",
       use: {
         browserName: "firefox",
-        viewport: {
-          width: 1920,
-          height: 1080,
-        },
+        viewport: { width: 1920, height: 1080 },
       },
     },
-
     {
       name: "WebKit",
       use: {
         browserName: "webkit",
-        viewport: {
-          width: 1920,
-          height: 1080,
-        },
+        viewport: { width: 1920, height: 1080 },
       },
     },
   ],

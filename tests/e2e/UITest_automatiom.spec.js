@@ -16,7 +16,7 @@ test.describe("UI Test Automation", () => {
 
   test.afterEach(async ({ page }) => {
     await page.goBack();
-    console.log("Navigated back to the home page");
+    console.log(navigatedBackToTheHomePage);
     await page.close();
     console.log("page closed");
   });
