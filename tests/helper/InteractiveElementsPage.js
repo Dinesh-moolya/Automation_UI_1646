@@ -72,13 +72,16 @@ export class InteractiveElementsPage {
     const stopButton = this.page.locator("#stopButton");
     await expect(async () => {
       const currentValue = await progressBar.getAttribute("aria-valuenow");
+      if (!currentValue) {
+        throw new Error("Progress value not found");
+      }
       const numericValue = Number(currentValue);
-      if (numericValue >= targetValue) {
+      if (numericValue >= targetValue && numericValue < 100) {
         await stopButton.click();
         return;
       }
       throw new Error(
-        `Current value ${numericValue} is less than ${targetValue}`,
+        `Waiting... current value: ${numericValue}, target: ${targetValue}`,
       );
     }).toPass({
       timeout: 30000,
@@ -102,12 +105,14 @@ export class InteractiveElementsPage {
 
   async getVisibilityStatus() {
     return {
-      removed: await this.removedButton.isVisible(),
-      zeroWidth: await this.zeroWidthButton.isVisible(),
-      overlapped: await this.overlappedButton.isVisible(),
-      opacity: await this.opacityButton.isVisible(),
-      visibilityHidden: await this.visibilityHiddenButton.isVisible(),
-      displayNone: await this.displayNoneButton.isVisible(),
+      removed: await this.removedButton.isVisible().catch(() => false),
+      zeroWidth: await this.zeroWidthButton.isVisible().catch(() => false),
+      overlapped: await this.overlappedButton.isVisible().catch(() => false),
+      opacity: await this.opacityButton.isVisible().catch(() => false),
+      visibilityHidden: await this.visibilityHiddenButton
+        .isVisible()
+        .catch(() => false),
+      displayNone: await this.displayNoneButton.isVisible().catch(() => false),
       offscreen: await this.offscreenButton.isVisible(),
     };
   }

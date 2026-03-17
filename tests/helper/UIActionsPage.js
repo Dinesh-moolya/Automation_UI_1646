@@ -42,11 +42,13 @@ export class UIActionsPage {
     this.textInputButton1 = this.page.getByRole("button", { name: "Test" });
     this.scrollbarsLink = this.page.getByRole("link", { name: "Scrollbars" });
     this.hidingButton = this.page.locator("#hidingButton");
-    this.dynamicTableLink = page.getByRole("link", { name: "Dynamic Table" });
-    this.warningText = page.locator("p.bg-warning");
-    this.rows = page.locator("div[role='row']");
-    this.verifyTextLink = page.getByRole("link", { name: "Verify Text" });
-    this.welcomeText = page.locator(
+    this.dynamicTableLink = this.page.getByRole("link", {
+      name: "Dynamic Table",
+    });
+    this.warningText = this.page.locator("p.bg-warning");
+    this.rows = this.page.locator("div[role='row']");
+    this.verifyTextLink = this.page.getByRole("link", { name: "Verify Text" });
+    this.welcomeText = this.page.locator(
       "//span[normalize-space(.)='Welcome UserName!']",
     );
   }

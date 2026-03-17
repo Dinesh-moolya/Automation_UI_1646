@@ -28,10 +28,10 @@ export class ControlsPage {
     this.targetInput = page.locator("#target");
     this.targetLabel = page.getByText("This is a Label");
     this.frameLink = page.getByRole("link", { name: "Frame" });
-    this.outerFrame = page.locator('iframe[name="frame-outer"]').contentFrame();
-    this.innerFrame = this.outerFrame
-      .locator('iframe[name="frame-inner"]')
-      .contentFrame();
+    this.outerFrame = this.page.frameLocator('iframe[name="frame-outer"]');
+    this.innerFrame = this.outerFrame.frameLocator(
+      'iframe[name="frame-inner"]',
+    );
     // Frame 1 Buttons
     this.iframeEdit1 = this.outerFrame.getByRole("button", { name: "Edit" });
     this.submitButton1 = this.outerFrame.getByRole("button", {
@@ -115,6 +115,8 @@ export class ControlsPage {
       case 10:
         await this.apply10sButton.click();
         break;
+      default:
+        throw new Error(`Invalid delay: ${seconds}`);
     }
   }
 

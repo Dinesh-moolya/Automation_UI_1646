@@ -14,13 +14,6 @@ test.describe("UI Test Automation", () => {
     await page.goto(url);
   });
 
-  test.afterEach(async ({ page }) => {
-    await page.goBack();
-    console.log("navigatedBackToTheHomePage");
-    await page.close();
-    console.log("page closed");
-  });
-
   // Click on the "Dynamic ID" link and interact with the button
   test("Dynamic ID", async ({ page }) => {
     const helper = new UIActionsPage(page);
@@ -238,7 +231,6 @@ test.describe("UI Test Automation", () => {
           continue;
         if ((type === "button" || type === "select") && check === "Editable")
           continue;
-
         test(`Verify ${type} remains ${check} after restore`, async ({
           page,
         }) => {
