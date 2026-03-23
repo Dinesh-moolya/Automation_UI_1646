@@ -1,40 +1,60 @@
-//
-
 // @ts-check
-import { defineConfig } from "@playwright/test";
+const { defineConfig } = require("@playwright/test");
 
-export default defineConfig({
+module.exports = defineConfig({
   testDir: "./tests",
 
+  workers: 1,
   fullyParallel: false,
+
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+
+  retries: 2,
 
   reporter: "html",
 
+  timeout: 60000,
+
+  expect: {
+    timeout: 10000,
+  },
+
   use: {
-    viewport: null, // Required for maximized mode
-    headless: false,
-    launchOptions: {
-      args: ["--start-maximized"],
-    },
+    // Run headless in Docker
+    headless: true,
+
     trace: "on-first-retry",
+
     screenshot: "only-on-failure",
   },
 
   projects: [
     {
       name: "Chromium",
-      use: { browserName: "chromium" },
+      use: {
+        browserName: "chromium",
+        viewport: null,
+        launchOptions: {
+          args: ["--start-maximized"],
+        },
+      },
     },
     {
       name: "Firefox",
-      use: { browserName: "firefox" },
+      use: {
+        browserName: "firefox",
+        viewport: null,
+        launchOptions: {
+          args: ["--start-maximized"],
+        },
+      },
     },
     {
       name: "WebKit",
-      use: { browserName: "webkit" },
+      use: {
+        browserName: "webkit",
+        viewport: { width: 1440, height: 900 },
+      },
     },
   ],
 });
