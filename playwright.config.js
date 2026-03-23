@@ -9,7 +9,7 @@ module.exports = defineConfig({
 
   forbidOnly: !!process.env.CI,
 
-  retries: process.env.CI ? 2 : 0,
+  retries: 2,
 
   reporter: "html",
 
@@ -34,20 +34,26 @@ module.exports = defineConfig({
       use: {
         browserName: "chromium",
         viewport: null,
+        launchOptions: {
+          args: ["--start-maximized"],
+        },
       },
     },
     {
       name: "Firefox",
       use: {
         browserName: "firefox",
-        viewport: { width: 1920, height: 1080 },
+        viewport: null,
+        launchOptions: {
+          args: ["--start-maximized"],
+        },
       },
     },
     {
       name: "WebKit",
       use: {
         browserName: "webkit",
-        viewport: { width: 1920, height: 1080 },
+        viewport: { width: 1440, height: 900 },
       },
     },
   ],
